@@ -8,7 +8,17 @@ var flightSchema = new mongoose.Schema({
   flight_number: {
     type: String,
     required: true
+  },
+  origin_address: {
+    type: []      //[Lat, Lng]
+  },
+  flight_date: {
+    type: Date
+  },
+  flight_time: {
+    type: Date
   }
+
 });
 
 

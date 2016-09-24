@@ -11,6 +11,24 @@ var users = require('./routes/users');
 
 var app = express();
 
+var flight = require('./utils/flights');
+var dir = require('./utils/directions');
+
+var p = dir.getLocation('801 Atlantic Dr NW, Atlanta, GA 30332');
+p.then(function(result) {
+  console.log(result);
+});
+
+// var p = dir.getRoute([33.7773412, -84.39732959999999], [33.9897215, -84.4420728]);
+// p.then(function(result) {
+//   console.log(result);
+// });
+
+// var p = flight.getFlight(1234, '2016-09-24');
+// p.then(function(result){
+//   console.log(result);
+// })
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
