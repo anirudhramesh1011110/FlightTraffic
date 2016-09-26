@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var flightSchema = new mongoose.Schema({
   user: {
-    type: Mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
   flight_number: {
@@ -12,11 +12,11 @@ var flightSchema = new mongoose.Schema({
   origin_address: {
     type: []      //[Lat, Lng]
   },
-  flight_date: {
+  flight_datetime: {
     type: Date
   },
-  flight_time: {
-    type: Date
+  airport_code: {
+    type: String
   }
 
 });

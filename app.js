@@ -11,24 +11,6 @@ var users = require('./routes/users');
 
 var app = express();
 
-var flight = require('./utils/flights');
-var dir = require('./utils/directions');
-
-var p = dir.getLocation('801 Atlantic Dr NW, Atlanta, GA 30332');
-p.then(function(result) {
-  console.log(result);
-});
-
-// var p = dir.getRoute([33.7773412, -84.39732959999999], [33.9897215, -84.4420728]);
-// p.then(function(result) {
-//   console.log(result);
-// });
-
-// var p = flight.getFlight(1234, '2016-09-24');
-// p.then(function(result){
-//   console.log(result);
-// })
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -44,7 +26,45 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Configure Database ==========================================================
 var connect = process.env.MONGODB_URI;
-mongoose.connect;
+mongoose.connect(connect);
+
+var flight = require('./utils/flights');
+var dir = require('./utils/directions');
+var flight = require('./models/flight');
+
+
+var flightP = flight.getFlight(2222, '2016-09-24');
+flightP.then(function(result){
+  var res = JSON.parse(result).flightStatusResponse.statusResponse;
+  var flightnbr = res.flightStatusTO.flightNumber;
+  var date = new Date(res.flightStatusTO.flightOriginDate);
+  var airportCode = res.flightStatusTO.flightStatusLegTOList[1].departureAirportCode;
+  var loc = [res.flightStatusTO.flightStatusLegTOList[1].departureTsoagLatitudeDecimal, res.flightStatusTO.flightStatusLegTOList[1].departureTsoagLongitudeDecimal];
+  var f = new flight({
+    user: new mongoose.mongo.ObjectId('57e72bd5912dda36dfbc4a05'),
+    flight_number: flightnbr,
+    origin_address: loc,
+    flight_datetime: date,
+    airport_code: airportCode
+  });
+  f.save(function(err){
+    if(err){
+      console.log(err);
+    }else{
+      console.log('SAVED');
+    }
+  });
+
+});
+
+// var flightModel = require('./models/flight');
+// var f = new flightModel({
+//   user: new mongoose.mongo.ObjectId('57e72bd5912dda36dfbc4a05');
+//   flight_number:
+//
+// });
+
+
 
 
 //Configure Routes ============================================================
