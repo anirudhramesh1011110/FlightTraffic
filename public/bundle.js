@@ -78,6 +78,8 @@ var _reactRouter2 = _interopRequireDefault(_reactRouter);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -90,38 +92,85 @@ var Home = function (_React$Component) {
   function Home() {
     _classCallCheck(this, Home);
 
-    return _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this));
+
+    _this.state = {
+      flightCode: null,
+      flightDate: null,
+      leaveBy: null,
+      travelTime: null
+    };
+    return _this;
   }
 
   _createClass(Home, [{
+    key: "_onChange",
+    value: function _onChange(e) {
+      e.preventDefault();
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
+    }
+  }, {
+    key: "_getFlightInfo",
+    value: function _getFlightInfo(e) {
+      e.preventDefault();
+      $.ajax({
+        url: '/getFlightInfo',
+        dataType: 'json',
+        type: 'POST',
+        data: this.state,
+        success: function (data) {
+          console.log("Success", data);
+        }.bind(this),
+        error: function (xhr, status, err) {
+          console.log('error', err, status, xhr);
+        }.bind(this)
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
 
       return _react2.default.createElement(
         "div",
-        null,
+        { className: "container" },
         _react2.default.createElement(
           "div",
-          { className: "container" },
+          { className: "card card-container" },
           _react2.default.createElement(
             "div",
-            { className: "card card-container" },
-            _react2.default.createElement(
-              "h3",
-              null,
-              "Your Flight Schedule"
-            ),
-            _react2.default.createElement(
-              "p",
-              null,
-              "Leave Residence By:  "
-            ),
-            _react2.default.createElement(
-              "p",
-              null,
-              "Estimated Travel Time: "
-            ),
-            _react2.default.createElement("br", null)
+            { id: "imageHeder" },
+            _react2.default.createElement("img", { id: "deltaImg", src: "https://pbs.twimg.com/profile_images/860130770/Supergraphic.jpg" }),
+            _react2.default.createElement("img", { id: "googleImg", src: "http://static.agencyentourage.com/wp-content/uploads/2014/08/google-maps-logo-1.jpeg" })
+          ),
+          _react2.default.createElement(
+            "h3",
+            { id: "cardHeader" },
+            "Flight Schedule"
+          ),
+          _react2.default.createElement("br", null),
+          _react2.default.createElement(
+            "form",
+            { className: "form-signin", method: "POST", href: "/getFlightInfo" },
+            _react2.default.createElement("input", { type: "email", id: "flightCode", className: "form-control", name: "flightCode", placeholder: "Please Enter Flight Code", onChange: this._onChange.bind(this), required: true }),
+            _react2.default.createElement("input", { type: "email", id: "flightDate", className: "form-control", name: "flightDate", placeholder: "YYYY-MM-DD", onChange: this._onChange.bind(this), required: true })
+          ),
+          _react2.default.createElement("br", null),
+          _react2.default.createElement(
+            "p",
+            null,
+            "Leave Residence By:  "
+          ),
+          _react2.default.createElement("br", null),
+          _react2.default.createElement(
+            "p",
+            null,
+            "Estimated Travel Time: "
+          ),
+          _react2.default.createElement("br", null),
+          _react2.default.createElement(
+            "button",
+            { className: "btn btn-lg btn-primary btn-block btn-signin", type: "submit", onClick: this._getFlightInfo.bind(this) },
+            "Find my Flight!"
           )
         )
       );

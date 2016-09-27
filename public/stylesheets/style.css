@@ -1,15 +1,45 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  /*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
 }
 
 a {
   color: #00B7FF;
 }
 
-img {
+/*img {
   max-width: 30%;
   max-height: 30%;
+}*/
+
+p {
+  font-family: "Verdana", sans-serif !important;
+  color: gray !important;
+  font-weight: bold;
+}
+
+#imageHeader {
+  display: inline-flex;
+  flex-direction: row;
+}
+
+#cardHeader {
+  font-family: "Verdana", sans-serif !important;
+  text-align: center;
+  color: gray !important;
+  font-weight: bold;
+}
+
+#googleImg {
+  width: 30%;
+  height: 30%;
+  margin-left: 40%;
+
+}
+
+#deltaImg {
+  width: 30%;
+  height: 30%;
 }
 
 /*

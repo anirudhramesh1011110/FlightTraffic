@@ -26,6 +26,10 @@ Flight.getFlight = function(flight_number, flight_date) {
 
 };
 
+/*
+  Get Airport Information.
+*/
+
 Flight.getAirport = function(airport_code) {
 
   var url = 'https://demo30-test.apigee.net/v1/hack/search/airport?'
